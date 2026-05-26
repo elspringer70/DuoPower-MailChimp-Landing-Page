@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18126838137');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DuoBox Specs | DuoPower CERP</title>
+  <meta name="description" content="DuoBox product specifications for the California Energy Reserve Program: 80 kWh storage, 24 kW inverter, dimensions, backup reserve, and grid-reserve operation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #111111;
+      --graphite: #202020;
+      --ink: #1f1f1f;
+      --muted: #5f6360;
+      --line: rgba(0, 0, 0, 0.12);
+      --white: #ffffff;
+      --mist: #f6f7f4;
+      --soft: #eef1ea;
+      --green: #1e7a55;
+      --green-dark: #0e4a35;
+      --blue: #82b8ff;
+      --image-bg: #fff;
+      --shadow: 0 16px 42px rgba(0, 0, 0, 0.14);
+      --radius: 8px;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Archivo", Arial, sans-serif;
+      background: var(--image-bg);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 34px;
+      color: var(--white);
+      background: rgba(17, 17, 17, .88);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      position: absolute;
+      left: 34px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 800;
+      font-size: 1.18rem;
+    }
+
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--white);
+      font-weight: 800;
+      font-size: .94rem;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 0 28px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      font-size: .86rem;
+      transition: transform 180ms var(--ease), background 180ms var(--ease), color 180ms var(--ease);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-light { background: rgba(255, 255, 255, .88); color: var(--black); }
+    .btn-dark { background: rgba(0, 0, 0, .84); color: var(--white); }
+    .btn-line { border-color: rgba(255, 255, 255, .72); color: var(--white); background: rgba(0, 0, 0, .1); }
+
+    .shell {
+      width: min(1180px, calc(100% - 44px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      min-height: 94svh;
+      padding: 112px 0 58px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .kicker {
+      font-size: .86rem;
+      font-weight: 700;
+      opacity: .78;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      letter-spacing: 0;
+      line-height: 1.06;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 5.7rem);
+      max-width: 780px;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      font-weight: 800;
+      max-width: 900px;
+    }
+
+    h3 {
+      font-size: 1.45rem;
+      font-weight: 800;
+    }
+
+    .lede {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.62;
+      font-weight: 500;
+      margin: 18px 0 0;
+    }
+
+    .hero .lede { color: rgba(255, 255, 255, .72); }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .product-stage {
+      position: relative;
+      width: 100%;
+      min-height: 560px;
+      margin: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: var(--image-bg);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 53% 50%;
+    }
+
+    .hero .product-stage img {
+      transform: scale(1.55);
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--image-bg);
+    }
+
+    .metric {
+      min-height: 126px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric:last-child { border-right: 0; }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(1.9rem, 3.5vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .section {
+      padding: 96px 0;
+      background: var(--image-bg);
+    }
+
+    .section.mist { background: var(--mist); }
+    .section.black { background: var(--black); color: var(--white); }
+    .section.black .lede { color: rgba(255, 255, 255, .72); }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 42px;
+      align-items: start;
+      margin-bottom: 38px;
+    }
+
+    .image-split {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .balanced-split {
+      align-items: center;
+    }
+
+    .dimensions-layout {
+      grid-template-columns: .9fr 1.1fr;
+      gap: 48px;
+    }
+
+    .visual-card {
+      width: 100%;
+      margin: 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--white);
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .06);
+    }
+
+    .visual-card.dark {
+      background: var(--graphite);
+      border-color: rgba(255, 255, 255, .14);
+    }
+
+    .visual-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .visual-card.image-contain img {
+      object-fit: contain;
+      padding: 24px;
+      background: var(--white);
+    }
+
+    .visual-card.scale-card {
+      height: clamp(620px, 43vw, 720px);
+    }
+
+    .visual-card.dimensions-card {
+      height: clamp(520px, 36vw, 620px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .visual-card.dimensions-card img,
+    .visual-card.scale-card img {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .visual-card.dimensions-card img {
+      padding: 0;
+      background: var(--white);
+      object-fit: contain;
+      object-position: center;
+      transform: none;
+    }
+
+    .visual-card.scale-card img {
+      object-fit: cover;
+      object-position: 55% center;
+    }
+
+    .visual-card .caption {
+      padding: 18px 20px;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .visual-card.dark .caption { color: rgba(255, 255, 255, .72); }
+
+    .scale-layout {
+      grid-template-columns: 1.28fr .72fr;
+      gap: 42px;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .spec {
+      padding: 20px;
+      min-height: 116px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .spec strong {
+      display: block;
+      font-size: 1.75rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .spec span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .section.black .spec {
+      background: var(--black);
+      border-color: rgba(255, 255, 255, .18);
+    }
+
+    .section.black .spec span { color: rgba(255, 255, 255, .68); }
+    .section.black .spec-grid { border-color: rgba(255, 255, 255, .18); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: var(--white);
+      margin-top: 28px;
+    }
+
+    th, td {
+      padding: 16px 18px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.38;
+      font-weight: 600;
+    }
+
+    th {
+      background: var(--black);
+      color: var(--white);
+      font-size: .88rem;
+    }
+
+    td:first-child {
+      width: 32%;
+      color: var(--muted);
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, .18);
+      border: 1px solid rgba(255, 255, 255, .18);
+      margin-top: 36px;
+    }
+
+    .mode {
+      min-height: 236px;
+      padding: 24px;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mode p {
+      color: rgba(255, 255, 255, .68);
+      font-weight: 500;
+      line-height: 1.45;
+      margin: 16px 0 0;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-top: 18px;
+    }
+
+    footer {
+      background: var(--black);
+      color: rgba(255, 255, 255, .68);
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      padding: 64px 0 34px;
+      font-size: .94rem;
+      font-weight: 500;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.45fr repeat(2, minmax(150px, 1fr));
+      gap: 42px;
+      align-items: start;
+    }
+
+    .footer-brand {
+      max-width: 360px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      color: var(--white);
+      font-size: 1.35rem;
+      line-height: 1;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .footer-brand p {
+      margin: 0;
+      color: rgba(255, 255, 255, .68);
+      line-height: 1.55;
+    }
+
+    .footer-col h3 {
+      margin: 0 0 18px;
+      color: rgba(255, 255, 255, .96);
+      font-size: .9rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .footer-col a {
+      display: block;
+      color: rgba(255, 255, 255, .62);
+      line-height: 1.35;
+      margin-top: 12px;
+      transition: color 180ms var(--ease);
+    }
+
+    .footer-col a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      color: rgba(255, 255, 255, .48);
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .image-split,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-strip,
+      .mode-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        position: absolute;
+        right: 34px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 22px;
+        right: 22px;
+        transform: none;
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 10px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, .14);
+        background: rgba(17, 17, 17, .96);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, .32);
+        backdrop-filter: blur(12px);
+        font-size: .98rem;
+      }
+
+      .nav.menu-open .nav-links {
+        display: grid;
+      }
+
+      .nav-links a {
+        display: flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 0 12px;
+        border-radius: 6px;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        background: rgba(255, 255, 255, .08);
+      }
+
+      .visual-card.dimensions-card img,
+      .visual-card.scale-card img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+      }
+
+      .visual-card.dimensions-card,
+      .visual-card.scale-card {
+        height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav { padding: 0 18px; }
+      .brand { left: 18px; font-size: 1.06rem; }
+      .nav-links {
+        left: 18px;
+        right: 18px;
+        gap: 0;
+      }
+      .menu-toggle { right: 18px; }
+      .hero { padding-top: 92px; }
+      .product-stage { min-height: 360px; }
+      .hero .product-stage {
+        background: var(--black);
+        border-color: rgba(255, 255, 255, .14);
+      }
+      .hero .product-stage img {
+        filter: invert(1);
+      }
+      .visual-card.dimensions-card img {
+        transform: scale(1.25);
+      }
+      .metric-strip,
+      .spec-grid,
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+      .metric { min-height: auto; }
+      footer { padding: 52px 0 28px; }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .footer-bottom { margin-top: 42px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="index.html#top">DuoPower</a>
+    <div class="nav-links" id="primaryMenu">
+      <a href="#scale">Scale</a>
+      <a href="#size">Size</a>
+      <a href="#specs">Specs</a>
+      <a href="#operation">Operation</a>
+      <a href="index.html#cerp-interest">Estimate</a>
+    </div>
+    <button class="menu-toggle" type="button" aria-controls="primaryMenu" aria-expanded="false">Menu</button>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <div class="kicker">DuoBox residential energy node</div>
+          <h1>80 kWh reserve, installed at home.</h1>
+          <p class="lede">DuoBox is the battery at the center of CERP: a modular LFP system with a 24 kW inverter, sized for homeowner backup and operated by DuoPower as dispatchable local grid capacity.</p>
+          <div class="actions">
+            <a class="btn btn-light" href="index.html#program">Back to CERP</a>
+            <a class="btn btn-line" href="#specs">View specs</a>
+          </div>
+        </div>
+        <figure class="product-stage">
+          <img src="assets/g_duobox_2d_front-2.png" alt="DuoBox 2D front elevation" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section mist" id="scale">
+      <div class="shell image-split scale-layout balanced-split">
+        <figure class="visual-card scale-card">
+          <img src="assets/g_duobox_resi-2-2.png" alt="DuoBox installed beside a home with people nearby for scale" />
+        </figure>
+        <div>
+          <div class="kicker">Human scale</div>
+          <h2>Large enough to matter, still installable at home.</h2>
+          <p class="lede">DuoBox is larger than a typical home battery, while keeping a compact form that fits beside homes and garages.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="size">
+      <div class="shell image-split balanced-split dimensions-layout">
+        <div>
+          <div class="kicker">Dimensions</div>
+          <h2>Compact footprint.</h2>
+          <p class="lede">DuoBox stacks capacity vertically, keeping the ground footprint small for residential installation.</p>
+          <div class="spec-grid" aria-label="DuoBox size summary">
+            <div class="spec"><strong>31.3 in</strong><span>Width</span></div>
+            <div class="spec"><strong>16.7 in</strong><span>Depth</span></div>
+            <div class="spec"><strong>72.4 in</strong><span>Height</span></div>
+            <div class="spec"><strong>3.6 sq ft</strong><span>Ground footprint</span></div>
+          </div>
+        </div>
+        <figure class="visual-card image-contain dimensions-card">
+          <img src="assets/g_duobox_2d_dimensions-3.png" alt="DuoBox front and side dimension drawing" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section mist" id="specs">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Technical specifications</div>
+            <h2>DuoBox-80/24 specifications.</h2>
+          </div>
+        </div>
+        <table aria-label="DuoBox technical specifications">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Nameplate energy</td><td>79.8 kWh</td></tr>
+            <tr><td>Usable system energy</td><td>78.8 kWh</td></tr>
+            <tr><td>Inverter rated power</td><td>24 kW continuous / 36 kW peak for 10 seconds</td></tr>
+            <tr><td>System dimensions</td><td>31.3 in W x 16.7 in D x 72.4 in H</td></tr>
+            <tr><td>Enclosure</td><td>NEMA 4X / IP67</td></tr>
+            <tr><td>Home-use allocation</td><td>8.0 kWh is always allocated for household daily use. 78.8 kWh backup is available during grid outage events.</td></tr>
+            <tr><td>Grid-service allocation</td><td>70.8 kWh allocated for CERP dispatch.</td></tr>
+            <tr><td>NQC base case</td><td>17.7 kW (70.8 kWh over 4-hour dispatch window)</td></tr>
+            <tr><td>Backup transfer</td><td>Less than 10 ms</td></tr>
+            <tr><td>Round-trip efficiency</td><td>90%</td></tr>
+            <tr><td>Max charge/discharge rate</td><td>24 kW (0.3C)</td></tr>
+            <tr><td>Cycle life</td><td>10,000 cycles</td></tr>
+            <tr><td>Calendar life</td><td>20 years</td></tr>
+            <tr><td>Cell chemistry</td><td>Lithium Iron Phosphate (LFP) prismatic</td></tr>
+            <tr><td>Module energy</td><td>15.95 kWh nominal</td></tr>
+            <tr><td>System modules</td><td>5 stacked battery modules</td></tr>
+            <tr><td>System voltage</td><td>256V DC nominal, 200-292V DC range</td></tr>
+            <tr><td>Operating temperature</td><td>-20°C to +55°C</td></tr>
+            <tr><td>Compliance</td><td>UL 9540, UL 9540A, UL 1741-SA, IEEE 1547, CA Rule 21, and California Energy Commission equipment listing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section black" id="operation">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Operating modes</div>
+            <h2>Extended backup and grid services.</h2>
+          </div>
+          <p class="lede">DuoPower manages grid-service operation under CERP rules, while your home receives backup reserve, bill savings, and CERP payments without buying the battery.</p>
+        </div>
+        <div class="mode-grid" aria-label="DuoBox operating modes">
+          <article class="mode"><h3>Grid service</h3><p>Responds to grid dispatch commands during CERP contracted dispatch windows.</p></article>
+          <article class="mode"><h3>PSPS event watch</h3><p>Suspends dispatch and pre-charges ahead of planned power outage events.</p></article>
+          <article class="mode"><h3>Emergency blackout</h3><p>Whole home power backup during an emergency blackout from the available DuoBox state of charge under CERP terms.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell image-split">
+        <div>
+          <div class="kicker">Back to program</div>
+          <h2>See what CERP could mean for your home.</h2>
+          <p class="lede">Connect with a DuoPower energy expert to estimate potential bill savings, backup value, and CERP payments for your specific usage case.</p>
+          <div class="actions">
+            <a class="btn btn-dark" href="index.html#cerp-interest">Request estimate</a>
+          </div>
+        </div>
+        <figure class="visual-card">
+          <img src="assets/g_duobox_resi-1-1.png" alt="DuoBox installed beside a Bay Area-style home" />
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html#top">DuoPower</a>
+          <p>DuoBox product specifications for CERP home energy storage.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Product</h3>
+          <a href="#size">Dimensions</a>
+          <a href="#specs">Technical specs</a>
+          <a href="#operation">Operating modes</a>
+        </div>
+        <div class="footer-col">
+          <h3>Program</h3>
+          <a href="index.html#program">Back to CERP</a>
+          <a href="index.html#cerp-interest">Request estimate</a>
+        </div>
+      </div>
+      <div class="footer-bottom">Copyright 2026 DuoPower. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    const primaryNav = document.querySelector(".nav");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const primaryMenu = document.getElementById("primaryMenu");
+
+    function closeMenu() {
+      primaryNav.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+
+    menuToggle.addEventListener("click", function () {
+      const isOpen = primaryNav.classList.toggle("menu-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    primaryMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!primaryNav.contains(event.target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    });
+  </script>
+</body>
+</html>
