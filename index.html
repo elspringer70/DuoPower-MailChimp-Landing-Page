@@ -1965,6 +1965,91 @@
       </div>
     </section>
   </main>
+  <!-- Mailchimp sync: silently submit interest form to Mailchimp without changing the page -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var interestForm = document.getElementById('interestForm');
+      if (!interestForm) return;
+
+      interestForm.addEventListener('submit', function () {
+        try {
+          var mcAction = 'https://berkeley.us10.list-manage.com/subscribe/post?u=3e12a889de44730264acd3e2d&id=16ffd395bf&f_id=004c27e1f0';
+
+          // ensure a hidden iframe target exists
+          if (!document.getElementById('mc-hidden-iframe')) {
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'mc-hidden-iframe';
+            iframe.id = 'mc-hidden-iframe';
+            document.body.appendChild(iframe);
+          }
+
+          var mcForm = document.createElement('form');
+          mcForm.action = mcAction;
+          mcForm.method = 'POST';
+          mcForm.target = 'mc-hidden-iframe';
+          mcForm.style.display = 'none';
+
+          function append(name, value) {
+            var i = document.createElement('input');
+            i.type = 'hidden';
+            i.name = name;
+            i.value = value || '';
+            mcForm.appendChild(i);
+          }
+
+          var nameVal = (document.getElementById('intentName') && document.getElementById('intentName').value) || '';
+          var emailVal = (document.getElementById('intentEmail') && document.getElementById('intentEmail').value) || '';
+          var zipVal = (document.getElementById('intentZip') && document.getElementById('intentZip').value) || '';
+          var ccaVal = (document.getElementById('intentCca') && document.getElementById('intentCca').value) || '';
+          var interestVal = (document.getElementById('intentTimeline') && document.getElementById('intentTimeline').value) || '';
+
+          // map local values to Mailchimp option labels
+          var ccaMap = {
+            'pce': 'Peninsula Clean Energy',
+            'svce': 'Silicon Valley Clean Energy',
+            'mce': 'MCE',
+            'ava': 'Ava Community Energy',
+            'pgande': 'PG&E / Not Sure'
+          };
+          var interestMap = {
+            'pilot': 'Count me for a pilot',
+            'estimate': 'Send me a home estimate first',
+            'later': 'Keep me updated'
+          };
+
+          var ccaLabel = ccaMap[ccaVal] || '';
+          var interestLabel = interestMap[interestVal] || '';
+
+          // attempt to populate last name for Mailchimp's LNAME field
+          var lname = '';
+          if (nameVal.trim()) {
+            var parts = nameVal.trim().split(/\s+/);
+            lname = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
+          }
+
+          append('EMAIL', emailVal);
+          append('LNAME', lname);
+          append('MMERGE7', ccaLabel);
+          append('MMERGE8', interestLabel);
+          append('MMERGE9', zipVal);
+          append('MMERGE10', nameVal);
+
+          // Mailchimp honeypot field
+          append('b_3e12a889de44730264acd3e2d_16ffd395bf', '');
+
+          document.body.appendChild(mcForm);
+          mcForm.submit();
+
+          // cleanup shortly after submit
+          setTimeout(function () { mcForm.remove(); }, 5000);
+        } catch (err) {
+          console.error('Mailchimp sync error', err);
+        }
+        // allow original form submission to continue unchanged
+      });
+    });
+  </script>
 
   <footer id="site-footer">
     <div class="shell">
