@@ -974,6 +974,10 @@
       margin-bottom: 14px;
     }
 
+    .field-wide {
+      grid-column: 1 / -1;
+    }
+
     label {
       font-weight: 700;
       font-size: .88rem;
@@ -1891,17 +1895,116 @@
               </div>
               <div class="form-grid">
                 <div class="field">
-                  <label for="intentCca">Electric provider / CCA</label>
-                  <select id="intentCca" name="cca" required>
-                    <option value="" selected>Select provider</option>
-                    <option value="pce">Peninsula Clean Energy</option>
-                    <option value="svce">Silicon Valley Clean Energy</option>
-                    <option value="mce">MCE</option>
-                    <option value="ava">Ava Community Energy</option>
-                    <option value="pgande">PG&E / not sure</option>
+                  <label for="intentUtility">Electric utility</label>
+                  <select id="intentUtility" name="electricUtility" required>
+                    <option value="" selected>Select electric utility</option>
+                    <optgroup label="Investor-owned utilities">
+                      <option value="bear-valley-electric-service">Bear Valley Electric Service</option>
+                      <option value="liberty-utilities-calpeco">Liberty Utilities (CalPeco Electric)</option>
+                      <option value="pacific-gas-electric">Pacific Gas and Electric (PG&amp;E)</option>
+                      <option value="pacific-power">PacifiCorp / Pacific Power</option>
+                      <option value="san-diego-gas-electric">San Diego Gas &amp; Electric (SDG&amp;E)</option>
+                      <option value="southern-california-edison">Southern California Edison (SCE)</option>
+                    </optgroup>
+                    <optgroup label="Public utilities and public LSEs">
+                      <option value="alameda-municipal-power">Alameda Municipal Power</option>
+                      <option value="anaheim-public-utilities">Anaheim Public Utilities</option>
+                      <option value="azusa-light-water">Azusa Light &amp; Water</option>
+                      <option value="banning-electric-utility">Banning Electric Utility</option>
+                      <option value="biggs-municipal-utilities">Biggs Municipal Utilities</option>
+                      <option value="burbank-water-power">Burbank Water and Power</option>
+                      <option value="san-francisco-power-enterprise">City and County of San Francisco Power Enterprise</option>
+                      <option value="cerritos-electric-utility">Cerritos Electric Utility</option>
+                      <option value="coachella-water-authority">City of Coachella Water Authority</option>
+                      <option value="city-of-industry">City of Industry</option>
+                      <option value="city-of-oroville">City of Oroville</option>
+                      <option value="colton-public-utilities">Colton Public Utilities</option>
+                      <option value="corona-water-power">Corona Department of Water and Power</option>
+                      <option value="eastside-power-authority">Eastside Power Authority</option>
+                      <option value="glendale-water-power">Glendale Water &amp; Power</option>
+                      <option value="gridley-electric-utility">Gridley Electric Utility</option>
+                      <option value="healdsburg-electric-department">Healdsburg Electric Department</option>
+                      <option value="imperial-irrigation-district">Imperial Irrigation District</option>
+                      <option value="kirkwood-meadows-pud">Kirkwood Meadows Public Utility District</option>
+                      <option value="lassen-municipal-utility-district">Lassen Municipal Utility District</option>
+                      <option value="lathrop-irrigation-district">Lathrop Irrigation District</option>
+                      <option value="lodi-electric-utility">Lodi Electric Utility</option>
+                      <option value="lompoc-utilities">Lompoc Utilities</option>
+                      <option value="ladwp">Los Angeles Department of Water and Power</option>
+                      <option value="merced-irrigation-district">Merced Irrigation District</option>
+                      <option value="metropolitan-water-district">Metropolitan Water District of Southern California</option>
+                      <option value="modesto-irrigation-district">Modesto Irrigation District</option>
+                      <option value="moreno-valley-utility">Moreno Valley Utility</option>
+                      <option value="needles-public-utility-authority">Needles Public Utility Authority</option>
+                      <option value="palo-alto-utilities">Palo Alto Utilities</option>
+                      <option value="pasadena-water-power">Pasadena Water and Power</option>
+                      <option value="pittsburg-power-island-energy">Pittsburg Power Company / Island Energy</option>
+                      <option value="port-of-oakland">Port of Oakland</option>
+                      <option value="port-of-stockton">Port of Stockton</option>
+                      <option value="pwrpa">Power and Water Resources Pooling Authority</option>
+                      <option value="rancho-cucamonga-municipal-utility">Rancho Cucamonga Municipal Utility</option>
+                      <option value="redding-electric-utility">Redding Electric Utility</option>
+                      <option value="riverside-public-utilities">Riverside Public Utilities</option>
+                      <option value="roseville-electric-utility">Roseville Electric Utility</option>
+                      <option value="smud">Sacramento Municipal Utility District (SMUD)</option>
+                      <option value="shasta-lake-electric-utility">Shasta Lake Electric Utility</option>
+                      <option value="shelter-cove-resort-improvement-district">Shelter Cove Resort Improvement District</option>
+                      <option value="silicon-valley-power">Silicon Valley Power</option>
+                      <option value="trinity-public-utilities-district">Trinity Public Utilities District</option>
+                      <option value="truckee-donner-pud">Truckee Donner Public Utility District</option>
+                      <option value="turlock-irrigation-district">Turlock Irrigation District</option>
+                      <option value="ukiah-electric-utility">Ukiah Electric Utility</option>
+                      <option value="vernon-public-utilities">Vernon Public Utilities</option>
+                      <option value="victorville-municipal-utility">Victorville Municipal Utility</option>
+                    </optgroup>
+                    <optgroup label="Electric cooperatives">
+                      <option value="anza-electric-cooperative">Anza Electric Cooperative</option>
+                      <option value="plumas-sierra-rural-electric-cooperative">Plumas-Sierra Rural Electric Cooperative</option>
+                      <option value="surprise-valley-electrification-corporation">Surprise Valley Electrification Corporation</option>
+                      <option value="valley-electric-association">Valley Electric Association</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                      <option value="not-sure">Not sure</option>
+                      <option value="other">Other / not listed</option>
+                    </optgroup>
                   </select>
                 </div>
                 <div class="field">
+                  <label for="intentCca">Community Choice provider <span class="optional">(optional)</span></label>
+                  <select id="intentCca" name="communityChoiceProvider">
+                    <option value="" selected>Select CCA, if applicable</option>
+                    <option value="none">None</option>
+                    <option value="not-sure">Not sure</option>
+                    <option value="apple-valley-choice-energy">Apple Valley Choice Energy</option>
+                    <option value="ava-community-energy">Ava Community Energy</option>
+                    <option value="central-coast-community-energy">Central Coast Community Energy (3CE)</option>
+                    <option value="clean-energy-alliance">Clean Energy Alliance</option>
+                    <option value="clean-power-alliance">Clean Power Alliance</option>
+                    <option value="cleanpowersf">CleanPowerSF</option>
+                    <option value="desert-community-energy">Desert Community Energy</option>
+                    <option value="epic">Energy for Palmdale's Independent Choice (EPIC)</option>
+                    <option value="king-city-community-power">King City Community Power</option>
+                    <option value="lancaster-choice-energy">Lancaster Choice Energy</option>
+                    <option value="mce">MCE</option>
+                    <option value="orange-county-power-authority">Orange County Power Authority</option>
+                    <option value="peninsula-clean-energy">Peninsula Clean Energy</option>
+                    <option value="prime">Pico Rivera Innovative Municipal Energy (PRIME)</option>
+                    <option value="pioneer-community-energy">Pioneer Community Energy</option>
+                    <option value="pomona-choice-energy">Pomona Choice Energy</option>
+                    <option value="rancho-mirage-energy-authority">Rancho Mirage Energy Authority</option>
+                    <option value="redwood-coast-energy-authority">Redwood Coast Energy Authority</option>
+                    <option value="san-diego-community-power">San Diego Community Power</option>
+                    <option value="san-jacinto-power">San Jacinto Power</option>
+                    <option value="san-jose-clean-energy">San José Clean Energy</option>
+                    <option value="santa-barbara-clean-energy">Santa Barbara Clean Energy</option>
+                    <option value="silicon-valley-clean-energy">Silicon Valley Clean Energy</option>
+                    <option value="sonoma-clean-power">Sonoma Clean Power</option>
+                    <option value="valley-clean-energy">Valley Clean Energy</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="field field-wide">
                   <label for="intentTimeline">Interest level</label>
                   <select id="intentTimeline" name="interestLevel" required>
                     <option value="" selected>Choose interest level</option>
@@ -1965,91 +2068,6 @@
       </div>
     </section>
   </main>
-  <!-- Mailchimp sync: silently submit interest form to Mailchimp without changing the page -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var interestForm = document.getElementById('interestForm');
-      if (!interestForm) return;
-
-      interestForm.addEventListener('submit', function () {
-        try {
-          var mcAction = 'https://berkeley.us10.list-manage.com/subscribe/post?u=3e12a889de44730264acd3e2d&id=16ffd395bf&f_id=004c27e1f0';
-
-          // ensure a hidden iframe target exists
-          if (!document.getElementById('mc-hidden-iframe')) {
-            var iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.name = 'mc-hidden-iframe';
-            iframe.id = 'mc-hidden-iframe';
-            document.body.appendChild(iframe);
-          }
-
-          var mcForm = document.createElement('form');
-          mcForm.action = mcAction;
-          mcForm.method = 'POST';
-          mcForm.target = 'mc-hidden-iframe';
-          mcForm.style.display = 'none';
-
-          function append(name, value) {
-            var i = document.createElement('input');
-            i.type = 'hidden';
-            i.name = name;
-            i.value = value || '';
-            mcForm.appendChild(i);
-          }
-
-          var nameVal = (document.getElementById('intentName') && document.getElementById('intentName').value) || '';
-          var emailVal = (document.getElementById('intentEmail') && document.getElementById('intentEmail').value) || '';
-          var zipVal = (document.getElementById('intentZip') && document.getElementById('intentZip').value) || '';
-          var ccaVal = (document.getElementById('intentCca') && document.getElementById('intentCca').value) || '';
-          var interestVal = (document.getElementById('intentTimeline') && document.getElementById('intentTimeline').value) || '';
-
-          // map local values to Mailchimp option labels
-          var ccaMap = {
-            'pce': 'Peninsula Clean Energy',
-            'svce': 'Silicon Valley Clean Energy',
-            'mce': 'MCE',
-            'ava': 'Ava Community Energy',
-            'pgande': 'PG&E / Not Sure'
-          };
-          var interestMap = {
-            'pilot': 'Count me for a pilot',
-            'estimate': 'Send me a home estimate first',
-            'later': 'Keep me updated'
-          };
-
-          var ccaLabel = ccaMap[ccaVal] || '';
-          var interestLabel = interestMap[interestVal] || '';
-
-          // attempt to populate last name for Mailchimp's LNAME field
-          var lname = '';
-          if (nameVal.trim()) {
-            var parts = nameVal.trim().split(/\s+/);
-            lname = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
-          }
-
-          append('EMAIL', emailVal);
-          append('LNAME', lname);
-          append('MMERGE7', ccaLabel);
-          append('MMERGE8', interestLabel);
-          append('MMERGE9', zipVal);
-          append('MMERGE10', nameVal);
-
-          // Mailchimp honeypot field
-          append('b_3e12a889de44730264acd3e2d_16ffd395bf', '');
-
-          document.body.appendChild(mcForm);
-          mcForm.submit();
-
-          // cleanup shortly after submit
-          setTimeout(function () { mcForm.remove(); }, 5000);
-        } catch (err) {
-          console.error('Mailchimp sync error', err);
-        }
-        // allow original form submission to continue unchanged
-      });
-    });
-  </script>
 
   <footer id="site-footer">
     <div class="shell">
