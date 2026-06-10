@@ -2249,6 +2249,9 @@
           try{
             iframe.onload = function(){
               if (DEBUG) console.log('Mailchimp iframe loaded — submission should be processed by Mailchimp.');
+              // Show success message
+              document.getElementById('interestStatus').style.display = 'block';
+              document.getElementById('interestForm').style.display = 'none';
               // remove iframe after a short delay to keep DOM tidy
               setTimeout(()=>{ try{ iframe.parentNode && iframe.parentNode.removeChild(iframe); }catch(e){} }, 3000);
             };
@@ -2260,7 +2263,8 @@
         }catch(e){ console.error('Mailchimp sync failed', e); }
       }
 
-      document.getElementById('interestForm').addEventListener('submit', function(){
+      document.getElementById('interestForm').addEventListener('submit', function(e){
+        e.preventDefault();
         try{
           const name = (document.getElementById('intentName') || {}).value || '';
           const zip = (document.getElementById('intentZip') || {}).value || '';
