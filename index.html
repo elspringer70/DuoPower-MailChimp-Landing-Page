@@ -2204,7 +2204,9 @@
   </script>
   <script>
     // Silent Mailchimp sync: submits a hidden form to Mailchimp without changing UI
+    // DEBUG: set to true to log payloads and iframe events to console
     (function(){
+      const DEBUG = true;
       const mcAction = 'https://berkeley.us10.list-manage.com/subscribe/post?u=3e12a889de44730264acd3e2d&id=16ffd395bf&f_id=004c27e1f0';
 
       function submitToMailchimp(data){
@@ -2217,6 +2219,8 @@
             iframe.id = 'mc_hidden_iframe';
             document.body.appendChild(iframe);
           }
+
+          if (DEBUG) console.log('Mailchimp sync payload:', data);
 
           const form = document.createElement('form');
           form.action = mcAction;
@@ -2241,6 +2245,15 @@
           // Mailchimp honeypot field
           add('b_3e12a889de44730264acd3e2d_16ffd395bf', '');
 
+          // listen for iframe load to detect Mailchimp response
+          try{
+            iframe.onload = function(){
+              if (DEBUG) console.log('Mailchimp iframe loaded — submission should be processed by Mailchimp.');
+              // remove iframe after a short delay to keep DOM tidy
+              setTimeout(()=>{ try{ iframe.parentNode && iframe.parentNode.removeChild(iframe); }catch(e){} }, 3000);
+            };
+          }catch(e){ if (DEBUG) console.warn('iframe onload attach failed', e); }
+
           document.body.appendChild(form);
           form.submit();
           setTimeout(()=>{ try{ document.body.removeChild(form); }catch(e){} }, 2500);
@@ -2263,7 +2276,9 @@
           const timeline = document.getElementById('intentTimeline');
           const interestText = timeline && timeline.options && timeline.selectedIndex >= 0 ? timeline.options[timeline.selectedIndex].text : '';
 
-          submitToMailchimp({ name: name.trim(), zip: zip.trim(), email: email.trim(), phone: phone.trim(), utility: utilityText.trim(), cca: ccaText.trim(), interest: interestText.trim() });
+          const payload = { name: name.trim(), zip: zip.trim(), email: email.trim(), phone: phone.trim(), utility: utilityText.trim(), cca: ccaText.trim(), interest: interestText.trim() };
+          if (DEBUG) console.log('Submitting Mailchimp payload', payload);
+          submitToMailchimp(payload);
         }catch(e){ console.error('Mailchimp sync listener error', e); }
       });
     })();
