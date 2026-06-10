@@ -1901,7 +1901,7 @@
                     <optgroup label="Investor-owned utilities">
                       <option value="Bear Valley Electric Service">Bear Valley Electric Service</option>
                       <option value="Liberty Utilities (CalPeco Electric)">Liberty Utilities (CalPeco Electric)</option>
-                      <option value="Pacific Gas & Electric (PG&E)">Pacific Gas and Electric (PG&E)</option>
+                      <option value="Pacific Gas and Electric (PG&E)">Pacific Gas and Electric (PG&E)</option>
                       <option value="PacifiCorp / Pacific Power">PacifiCorp / Pacific Power</option>
                       <option value="San Diego Gas &amp; Electric (SDG&amp;E)">San Diego Gas &amp; Electric (SDG&amp;E)</option>
                       <option value="Southern California Edison">Southern California Edison (SCE)</option>
@@ -2180,11 +2180,6 @@
       document.getElementById("resultCard").scrollIntoView({ behavior: "smooth", block: "center" });
     });
 
-    document.getElementById("interestForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-      document.getElementById("interestStatus").classList.add("visible");
-    });
-
     document.getElementById("leadForm").addEventListener("submit", function (event) {
       event.preventDefault();
       const email = document.getElementById("leadEmail").value.trim();
@@ -2206,7 +2201,7 @@
     // Silent Mailchimp sync: submits a hidden form to Mailchimp without changing UI
     // DEBUG: set to true to log payloads and iframe events to console
     (function(){
-      const DEBUG = true;
+      const DEBUG = false;
       const mcAction = 'https://berkeley.us10.list-manage.com/subscribe/post?u=3e12a889de44730264acd3e2d&id=16ffd395bf&f_id=004c27e1f0';
 
       function submitToMailchimp(data){
@@ -2242,6 +2237,7 @@
           add('MMERGE7', data.utility);
           add('MMERGE11', data.cca);
           add('MMERGE8', data.interest);
+          add('subscribe', 'Subscribe');
           // Mailchimp honeypot field
           add('b_3e12a889de44730264acd3e2d_16ffd395bf', '');
 
@@ -2249,9 +2245,7 @@
           try{
             iframe.onload = function(){
               if (DEBUG) console.log('Mailchimp iframe loaded — submission should be processed by Mailchimp.');
-              // Show success message
-              document.getElementById('interestStatus').style.display = 'block';
-              document.getElementById('interestForm').style.display = 'none';
+              document.getElementById('interestStatus').classList.add('visible');
               // remove iframe after a short delay to keep DOM tidy
               setTimeout(()=>{ try{ iframe.parentNode && iframe.parentNode.removeChild(iframe); }catch(e){} }, 3000);
             };
