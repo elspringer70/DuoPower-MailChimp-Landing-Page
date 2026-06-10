@@ -2220,7 +2220,7 @@
             document.body.appendChild(iframe);
           }
 
-          if (DEBUG) console.log('Mailchimp sync payload:', data);
+          if (DEBUG) console.log('Mailchimp sync payload:', JSON.stringify(data, null, 2));
 
           const form = document.createElement('form');
           form.action = mcAction;
@@ -2277,7 +2277,7 @@
           const interestValue = timeline && timeline.options && timeline.selectedIndex >= 0 ? timeline.options[timeline.selectedIndex].value : '';
 
           const payload = { name: name.trim(), zip: zip.trim(), email: email.trim(), phone: phone.trim(), utility: utilityValue.trim(), cca: ccaValue.trim(), interest: interestValue.trim() };
-          if (DEBUG) console.log('Submitting Mailchimp payload', payload);
+          if (DEBUG) console.log('Submitting Mailchimp payload:', JSON.stringify(payload, null, 2));
           submitToMailchimp(payload);
         }catch(e){ console.error('Mailchimp sync listener error', e); }
       });
