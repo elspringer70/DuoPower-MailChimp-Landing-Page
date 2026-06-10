@@ -2202,5 +2202,71 @@
 
     calculateEstimate();
   </script>
+  <script>
+    // Silent Mailchimp sync: submits a hidden form to Mailchimp without changing UI
+    (function(){
+      const mcAction = 'https://berkeley.us10.list-manage.com/subscribe/post?u=3e12a889de44730264acd3e2d&id=16ffd395bf&f_id=004c27e1f0';
+
+      function submitToMailchimp(data){
+        try{
+          let iframe = document.getElementById('mc_hidden_iframe');
+          if(!iframe){
+            iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'mc_hidden_iframe';
+            iframe.id = 'mc_hidden_iframe';
+            document.body.appendChild(iframe);
+          }
+
+          const form = document.createElement('form');
+          form.action = mcAction;
+          form.method = 'POST';
+          form.target = iframe.name;
+
+          function add(name, value){
+            const inp = document.createElement('input');
+            inp.type = 'hidden';
+            inp.name = name;
+            inp.value = value || '';
+            form.appendChild(inp);
+          }
+
+          add('MMERGE10', data.name);
+          add('MMERGE9', data.zip);
+          add('EMAIL', data.email);
+          add('PHONE', data.phone);
+          add('MMERGE7', data.utility);
+          add('MMERGE11', data.cca);
+          add('MMERGE8', data.interest);
+          // Mailchimp honeypot field
+          add('b_3e12a889de44730264acd3e2d_16ffd395bf', '');
+
+          document.body.appendChild(form);
+          form.submit();
+          setTimeout(()=>{ try{ document.body.removeChild(form); }catch(e){} }, 2500);
+        }catch(e){ console.error('Mailchimp sync failed', e); }
+      }
+
+      document.getElementById('interestForm').addEventListener('submit', function(){
+        try{
+          const name = (document.getElementById('intentName') || {}).value || '';
+          const zip = (document.getElementById('intentZip') || {}).value || '';
+          const email = (document.getElementById('intentEmail') || {}).value || '';
+          const phone = (document.getElementById('intentPhone') || {}).value || '';
+
+          const util = document.getElementById('intentUtility');
+          const utilityText = util && util.options && util.selectedIndex >= 0 ? util.options[util.selectedIndex].text : '';
+
+          const cca = document.getElementById('intentCca');
+          const ccaText = cca && cca.options && cca.selectedIndex >= 0 ? cca.options[cca.selectedIndex].text : '';
+
+          const timeline = document.getElementById('intentTimeline');
+          const interestText = timeline && timeline.options && timeline.selectedIndex >= 0 ? timeline.options[timeline.selectedIndex].text : '';
+
+          submitToMailchimp({ name: name.trim(), zip: zip.trim(), email: email.trim(), phone: phone.trim(), utility: utilityText.trim(), cca: ccaText.trim(), interest: interestText.trim() });
+        }catch(e){ console.error('Mailchimp sync listener error', e); }
+      });
+    })();
+  </script>
 </body>
 </html>
